@@ -3,6 +3,12 @@
 访问 [releases 页面](https://github.com/ludoux/LrcHelper/releases/latest) 来获得最新的发布版本。
 
 -----
+yu修改自用版
+修改了 LrcHelper/SharedFramework.cs 中355行之后以适配我的mp3
+其中出现了点小问题（.............连续出现太多会把设备卡死，奇怪的bug增加了！ ![Snipaste_2021-04-17_22-22-03](https://user-images.githubusercontent.com/44089074/115116305-71b81900-9fcb-11eb-9cf6-122fb1e098b8.png)）
+
+
+-----
 
 **运行要 .NET Framework 4.7.2 的支持**
 
