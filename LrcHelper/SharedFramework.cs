@@ -353,7 +353,7 @@ namespace ludoux.LrcHelper.SharedFramework
                     }
 
                 case 1://处理标点/文字的占位，倘若能同屏显示那么就优先同屏显示，否则按 case 0 一样翻译换行
-                       /* 
+                        /* 
                         * 在 NW-A27 的环境下测试。2.2 英寸屏幕，320*240 分辨率
                         * 倘若一行为 10 ，同屏三行共 30 textSize
                         * 纯中文/大写字母 10/13 = 0.76
@@ -371,22 +371,43 @@ namespace ludoux.LrcHelper.SharedFramework
                         * 数字 10/19 = 0.52
                         * ' 10/72 = 0.13
                         */
+                      /* 
+                        * 在 SA-1102 的环境下测试。2.2 英寸屏幕，160*80 分辨率
+                        * 倘若一行为10 ，同屏两行共 20 textSize
+                        * 纯中文/大写字母10/10 = 1.00
+                        * 小写字母 10/17 = 0.58
+                        * 汉字全角句号 10/19 = 0.52
+                        * 【 10/10 = 0.33
+                        * （会转成半角， 10/33 = 0.30
+                        * ,处理得很诡异，philips在连续5个,下直接崩掉，23333
+                        * 全角引号“，10/32 = 0.35
+                        * 半角引号，10/32 = 0.27
+                        * 「 10/10 = 0.27
+                        * 』 10/18 = 0.55
+                        * ！ 10/10 = 1.00
+                        * 半角冒号 10/65 = 0.15，全角冒号会转为半角显示
+                        * 数字 10/17 = 0.52
+                        * ' 10/53 = 0.13
+                        */
                     Dictionary<string, double> textSize = new Dictionary<string, double>()
                     {
-                        {@"。", 0.52 },
-                        {@"[【】]", 0.33 },
-                        {@"[「」]", 0.27 },
-                        {@"[『』]", 0.55 },
-                        {@"[“”]", 0.35 },
-                        {@"[""]", 0.27 },
-                        {@"[！!，,. ]", 0.18 },
-                        {@"[（）()]", 0.30 },
-                        {@"[\u2E80-\u9FFF]", 0.76 },
-                        {@"[\uac00-\ud7ff]", 0.76 },
-                        {@"[A-Z]", 0.76 },
-                        {@"[a-z]", 0.62 },
-                        {@"[0-9]", 0.52 },
-                        {@"'", 0.13 },
+                        {@"。", 1.00 },
+                        {@"[【】]", 1.00 },
+                        {@"[「」]", 1.00 },
+                        {@"[『』]", 1.00 },
+                        {@"[“”]", 0.32 },
+                        {@"[""]", 0.19 },
+                        {@"[！]", 1.00 },
+                        {@"[!]", 0.32 },
+                        {@"[（）]", 1.00 },
+                        {@"[()]", 1.00 },
+                        {@"[\u2E80-\u9FFF]", 1.00 },
+                        {@"[\uac00-\ud7ff]", 1.00 },
+                        {@"[A-Z]", 1.00 },
+                        {@"[a-z]", 0.58 },
+                        {@"[0-9]", 0.58 },
+                        {@"'", 0.18 },
+                        {@",", 0.25 },
                         {@"[:：]", 0.15 },
                     };
                     try
@@ -419,7 +440,7 @@ namespace ludoux.LrcHelper.SharedFramework
                                     errorLog = errorLog + "<connectedText{(" + connectedText.Count().ToString() + ") " + connectedText + "} is not empty>";
                                 }
                                 System.Diagnostics.Debug.WriteLine(this[i].OriLyrics + this[i].TransLyrics + "\r\n" + connectedText.Count().ToString() + ") " + connectedText + "\r\n" + totalTextSize + "\r\n============");
-                                if (totalTextSize < 30)//30 为三行同屏的 size
+                                if (totalTextSize < 20)//30 为三行同屏的 size
                                 {
                                     if (returnString.ToString() != "")
                                         returnString.Append("\r\n[" + this[i].Timeline + "]" + this[i].ToString());
